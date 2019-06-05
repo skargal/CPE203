@@ -22,15 +22,15 @@ final class WorldView
 
 
 
-   public void shiftView(int colDelta, int rowDelta)
-   {
-      int newCol = clamp(this.viewport.col + colDelta, 0,
-              this.world.numCols - this.viewport.numCols);
-      int newRow = clamp(this.viewport.row + rowDelta, 0,
-              this.world.numRows - this.viewport.numRows);
-
-      this.viewport.shift(newCol, newRow);
-   }
+//   public void shiftView(int colDelta, int rowDelta)
+//   {
+//      int newCol = clamp(this.viewport.col + colDelta, 0,
+//              this.world.numCols - this.viewport.numCols);
+//      int newRow = clamp(this.viewport.row + rowDelta, 0,
+//              this.world.numRows - this.viewport.numRows);
+//
+//      this.viewport.shift(newCol, newRow);
+//   }
 
    public void drawBackground()
    {
@@ -39,6 +39,7 @@ final class WorldView
          for (int col = 0; col < this.viewport.numCols; col++)
          {
             Point worldPoint = this.viewport.viewportToWorld(col, row);
+      //      Optional<PImage> image = this.world.getBackgroundImage(new Point(0,0)); //gets image of top left pixel to draw background
             Optional<PImage> image = this.world.getBackgroundImage(worldPoint);
             if (image.isPresent())
             {
@@ -63,7 +64,22 @@ final class WorldView
       }
    }
 
+   public void drawCrosshair()
+   {
+//      for (Entity entity : this.world.entities) {
+//         Point pos = entity.getPosition();
+//
+//         if (this.viewport.contains(pos))
+//         {
+//            Point viewPoint = this.viewport.worldToViewport(pos.x, pos.y);
+//            this.screen.image(entity.getCurrentImage(),
+//                    viewPoint.x * this.tileWidth, viewPoint.y * this.tileHeight);
+//         }
+//      }
+   }
+
    public void drawViewport() {
+      drawCrosshair();
       drawBackground();
       drawEntities();
    }

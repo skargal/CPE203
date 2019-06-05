@@ -21,8 +21,7 @@ public abstract class ActiveEntity extends Entity {
     }
 
 
-    protected void scheduleActions(EventScheduler scheduler,
-                                   WorldModel world, ImageStore imageStore) {
+    protected void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
         Activity act = new Activity(this, world, imageStore, 0);
         Animation anim = new Animation(this, world, imageStore, 0);
         scheduler.scheduleEvent(this, act.createActivityAction(world, imageStore),

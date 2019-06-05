@@ -14,6 +14,7 @@ final class Background
    }
 
 
+
    public PImage getCurrentImage()
    {
       if (this instanceof Background)
@@ -21,10 +22,11 @@ final class Background
          return this.images
                  .get(this.imageIndex);
       }
+
       else
       {
          throw new UnsupportedOperationException(
-                 String.format("getCurrentImage not supported for %s",
+                 String.format("not instance background",
                          this));
       }
    }

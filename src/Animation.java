@@ -30,10 +30,10 @@ public class Animation extends Action {
                         ((Miner_Not_Full)(this.getEntity())).getAnimationPeriod());
             }
 
-            else if (this.getEntity() instanceof Ghost) {
+            else if (this.getEntity() instanceof Space_Frog) {
                 scheduler.scheduleEvent(this.getEntity(),
                         createAnimationAction(Math.max(this.getRepeatCount() - 1, 0)),
-                        ((Ghost)(this.getEntity())).getAnimationPeriod());
+                        ((Space_Frog)(this.getEntity())).getAnimationPeriod());
             }
 
             else if (this.getEntity() instanceof Ore) {
@@ -48,6 +48,12 @@ public class Animation extends Action {
                         ((Ore_Blob)(this.getEntity())).getAnimationPeriod());
             }
 
+            else if (this.getEntity() instanceof Portal) {
+                scheduler.scheduleEvent(this.getEntity(),
+                        createAnimationAction(Math.max(this.getRepeatCount() - 1, 0)),
+                        ((Portal)(this.getEntity())).getAnimationPeriod());
+            }
+
             else if (this.getEntity() instanceof Quake) {
                 scheduler.scheduleEvent(this.getEntity(),
                         createAnimationAction(Math.max(this.getRepeatCount() - 1, 0)),
@@ -60,11 +66,13 @@ public class Animation extends Action {
                         ((Vein)(this.getEntity())).getAnimationPeriod());
             }
 
-            else {
-                throw new UnsupportedOperationException(
-                        String.format("executeActivityAction not supported for %s",
-                                "this.getEntity().kind"));
+            /*else if (this.getEntity() instanceof Crosshair) {
+                scheduler.scheduleEvent(this.getEntity(),
+                        createAnimationAction(Math.max(this.getRepeatCount() - 1, 0)),
+                        ((Crosshair)(this.getEntity())).getAnimationPeriod());
             }
+*/
+
         }
     }
 

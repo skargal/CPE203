@@ -1,0 +1,11 @@
+CPE 203-05
+Professor Irene Humer
+Sejal Kargal (skargal@calpoly.edu) and Michael Weiser (mjweiser@calpoly.edu)
+
+
+1. A mouse click will create 9 portal tiles. The center tile, an animated portal entity, summons an animated space frog if the center animating portal captures a space miner.
+2. When the above event is triggered, the space frog that is summoned will make all the other space miners disappear.
+3. The animated space frog will make any other space miners it touches disappear.
+4. The new entity is an animated space frog and it searches the entire world for space miners to make disappear.
+5. Sejal Kargal: implementing mouse click event, refactoring and adding space frog entity, helped change and make images (space miner, space frog) and background (space), fixed image list and gaia.sav
+   Michael Weiser: implemented portal animation and refactored entity, created animation images by splitting up gifs and converted images, changed virtual world settings to make the game full screen and scaled

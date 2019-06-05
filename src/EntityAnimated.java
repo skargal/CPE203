@@ -15,10 +15,10 @@ public abstract class EntityAnimated extends ActiveEntity {
 
     public Point nextPosition(WorldModel world, Point destPos) {
 
-        // SingleStepPathingStrategy pathstrat = new SingleStepPathingStrategy();
-        AStarPathingStrategy pathstrat = new AStarPathingStrategy();
+        // SingleStepPathingStrategy path = new SingleStepPathingStrategy();
+        AStarPathingStrategy path = new AStarPathingStrategy();
 
-        List<Point> pathPoints = pathstrat.computePath(this.getPosition(), destPos,
+        List<Point> pathPoints = path.computePath(this.getPosition(), destPos,
                 (p -> world.withinBounds(p) && !(world.isOccupied(p))),
                 ((p1, p2) -> p1.adjacent(p2)),
                 PathingStrategy.CARDINAL_NEIGHBORS);

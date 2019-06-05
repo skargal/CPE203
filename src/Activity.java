@@ -27,20 +27,25 @@ public class Activity extends Action {
                     this.getImageStore(), scheduler);
         }
 
-        else if (this.getEntity() instanceof Ghost) {
-            ((Ghost)(this.getEntity())).executeGhostActivity(this.getWorld(),
+       /* else if (this.getEntity() instanceof Crosshair) {
+            ((Crosshair)(this.getEntity())).executeCrosshairActivity(this.getWorld(),
+                    this.getImageStore(), scheduler);
+        }*/
+
+        else if (this.getEntity() instanceof Space_Frog) {
+            ((Space_Frog)(this.getEntity())).executesSpace_FrogActivity(this.getWorld(),
                     this.getImageStore(), scheduler);
         }
 
-        else if (this.getEntity() instanceof Frog) {
-            ((Frog)(this.getEntity())).executeFrogActivity(this.getWorld(), this.getImageStore(),
-                    scheduler);
-        }
         else if (this.getEntity() instanceof Ore) {
             ((Ore)(this.getEntity())).executeOreActivity(this.getWorld(), this.getImageStore(), scheduler);
         }
         else if (this.getEntity() instanceof Ore_Blob) {
             ((Ore_Blob)(this.getEntity())).executeOreBlobActivity(this.getWorld(),
+                    this.getImageStore(), scheduler);
+        }
+        else if (this.getEntity() instanceof Portal) {
+            ((Portal)(this.getEntity())).executePortalActivity(this.getWorld(),
                     this.getImageStore(), scheduler);
         }
         else if (this.getEntity() instanceof Quake) {

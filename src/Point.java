@@ -261,13 +261,28 @@ final class Point {
    }
 
 
-   public Ghost createGhost(String id, int resourceLimit,
+   public Space_Frog createSpace_Frog(String id, int resourceLimit,
    int actionPeriod, int animationPeriod,
    List<PImage> images)
    {
-      return new Ghost(id, this, images,
+      return new Space_Frog(id, this, images,
               resourceLimit, 0, actionPeriod, animationPeriod);
    }
+
+   public Portal createPortal(String id, int resourceLimit,
+                            int actionPeriod, int animationPeriod,
+                            List<PImage> images)
+   {
+      return new Portal(id, this, images,
+              resourceLimit, 0, actionPeriod, animationPeriod);
+   }
+
+  /* public Crosshair createCrosshair(String id, Point position, List<PImage> images, int resourceLimit,
+                                   int resourceCount, int actionPeriod, int animationPeriod)
+   {
+      return new Crosshair(id, this, images,
+              resourceLimit, 0, actionPeriod, animationPeriod);
+   }*/
 
    public Ore createOre(String id, int actionPeriod,
                         List<PImage> images)

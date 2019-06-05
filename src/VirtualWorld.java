@@ -6,18 +6,33 @@ import processing.event.MouseEvent;
 import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 public final class VirtualWorld
         extends PApplet
 {
+   static List<Integer> dim = new ArrayList<Integer>(4);
+
+   public void settings()
+   {
+      //size(displayWidth, displayHeight);
+      fullScreen();
+      dim.add(width);
+      dim.add(height);
+   }
+
+   static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
    public static final int TIMER_ACTION_PERIOD = 100;
 
-   public static final int VIEW_WIDTH = 640;
-   public static final int VIEW_HEIGHT = 480;
+   public static final int VIEW_WIDTH = (int)screenSize.getWidth();
+   public static final int VIEW_HEIGHT = (int)screenSize.getHeight();
+
    public static final int TILE_WIDTH = 32;
    public static final int TILE_HEIGHT = 32;
-   public static final int WORLD_WIDTH_SCALE = 2;
-   public static final int WORLD_HEIGHT_SCALE = 2;
+   public static final int WORLD_WIDTH_SCALE = 1;
+   public static final int WORLD_HEIGHT_SCALE = 1;
 
    public static final int VIEW_COLS = VIEW_WIDTH / TILE_WIDTH; // 640/32 = 20
    public static final int VIEW_ROWS = VIEW_HEIGHT / TILE_HEIGHT; // 480/32 = 15
@@ -46,10 +61,6 @@ public final class VirtualWorld
 
    public long next_time;
 
-   public void settings()
-   {
-      size(VIEW_WIDTH, VIEW_HEIGHT);
-   }
 
    /*
       Processing entry point for "sketch" setup.
@@ -84,37 +95,84 @@ public final class VirtualWorld
       view.drawViewport();
    }
 
+   void drawCrosshair(){
+      int x = mouseX;
+      int y = mouseY;
+
+//      if(for(Entity t : world.entities){
+//         ((t.getClass())) == (Crosshair.class);}
+//         )
+   }
+
    public void mouseClicked(MouseEvent mouseEvent) {
 
       int x = mouseEvent.getX() / TILE_WIDTH;
       int y = mouseEvent.getY() / TILE_HEIGHT;
+
       Point p = view.viewport.viewportToWorld(x, y);
-      world.setBackground(p, new Background("fire", imageStore.getImageList("fire")));
+//change grass to portal to change background
       Point p2 = view.viewport.viewportToWorld(x-1, y);
-      world.setBackground(p2, new Background("fire", imageStore.getImageList("fire")));
+      world.setBackground(p2, new Background("portal1", imageStore.getImageList("portal1")));
       Point p3 = view.viewport.viewportToWorld(x+1, y);
-      world.setBackground(p3, new Background("fire", imageStore.getImageList("fire")));
+      world.setBackground(p3, new Background("portal1", imageStore.getImageList("portal1")));
       Point p4 = view.viewport.viewportToWorld(x, y-1);
-      world.setBackground(p4, new Background("fire", imageStore.getImageList("fire")));
-   //   Point p5 = view.viewport.viewportToWorld(x, y+1);
-  //    world.setBackground(p5, new Background("fire", imageStore.getImageList("fire")));
-      //diagonals
+      world.setBackground(p4, new Background("portal1", imageStore.getImageList("portal1")));
+      Point p5 = view.viewport.viewportToWorld(x, y+1);
+      world.setBackground(p5, new Background("portal", imageStore.getImageList("portal")));
       Point p6 = view.viewport.viewportToWorld(x+1, y+1);
-      world.setBackground(p6, new Background("fire", imageStore.getImageList("fire")));
-  //    Point p7 = view.viewport.viewportToWorld(x-1, y-1);
-    //  world.setBackground(p7, new Background("fire", imageStore.getImageList("fire")));
-   //   Point p8 = view.viewport.viewportToWorld(x+1, y-1);
-   //   world.setBackground(p8, new Background("fire", imageStore.getImageList("fire")));
+      world.setBackground(p6, new Background("portal", imageStore.getImageList("portal")));
+      Point p7 = view.viewport.viewportToWorld(x-1, y-1);
+      world.setBackground(p7, new Background("portal", imageStore.getImageList("portal")));
+      Point p8 = view.viewport.viewportToWorld(x+1, y-1);
+      world.setBackground(p8, new Background("portal", imageStore.getImageList("portal")));
       Point p9 = view.viewport.viewportToWorld(x-1, y+1);
-      world.setBackground(p9, new Background("fire", imageStore.getImageList("fire")));
+      world.setBackground(p9, new Background("portal", imageStore.getImageList("portal")));
 
-      Ghost g = new Ghost("id", p, imageStore.getImageList("ghost"), 0, 0, 0, 0);
-      g.transformToGhost(p, world, scheduler, imageStore);
+      /*Portal por2 = new Portal("id", new Point(p.x +1, p.y), imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por2.executePortalActivity(world, imageStore, scheduler);
 
-      Frog f = new Frog("id", p, imageStore.getImageList("frog"), 0, 0, 0, 0);
-      f.transformToFrog(p, world, scheduler, imageStore);
+      Portal por3 = new Portal("id", new Point(p.x -1, p.y), imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por3.executePortalActivity(world, imageStore, scheduler);
+
+      Portal por4 = new Portal("id", new Point(p.x, p.y + 1), imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por4.executePortalActivity(world, imageStore, scheduler);
+
+      Portal por5 = new Portal("id", new Point(p.x, p.y - 1), imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por5.executePortalActivity(world, imageStore, scheduler);
+
+      Portal por6 = new Portal("id", new Point(p.x + 1, p.y + 1), imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por6.executePortalActivity(world, imageStore, scheduler);
+
+      Portal por7 = new Portal("id", new Point(p.x + 1, p.y - 1), imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por7.executePortalActivity(world, imageStore, scheduler);
+
+      Portal por8 = new Portal("id", new Point(p.x - 1, p.y + 1), imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por8.executePortalActivity(world, imageStore, scheduler);
+
+      Portal por9 = new Portal("id", new Point(p.x - 1, p.y - 1), imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por9.executePortalActivity(world, imageStore, scheduler);world.setBackground(p, new Background("portal", imageStore.getImageList("portal")));
+*/
+
+      Space_Frog g = new Space_Frog("id", p, imageStore.getImageList("space_frog"), 0, 0, 0, 0);
+      g.transformToSpace_Frog(p, world, scheduler, imageStore);
+
+      Portal por = new Portal("id", p, imageStore.getImageList("portal"), 0, 0, 5, 5);
+      por.executePortalActivity(world, imageStore, scheduler);
+
 
    }
+
+//   public void mouseOver(MouseEvent mouseEvent) {
+//
+//      int x = mouseEvent.getX() / TILE_WIDTH;
+//      int y = mouseEvent.getY() / TILE_HEIGHT;
+//
+//      Point p = view.viewport.viewportToWorld(x, y);
+//
+//
+//        Crosshair c = new Crosshair("id", p, imageStore.getImageList("crosshair"), 0, 0, 0, 0);
+//        c.executeCrosshairActivity(world, imageStore, scheduler);
+//   }
 
    public void keyPressed()
    {
@@ -138,7 +196,7 @@ public final class VirtualWorld
                dx = 1;
                break;
          }
-         view.shiftView(dx, dy);
+         //view.shiftView(dx, dy);
       }
    }
 
@@ -222,6 +280,7 @@ public final class VirtualWorld
 
    public static void main(String [] args)
    {
+      //PApplet.main("--present", "Fullscreen");
       parseCommandLine(args);
       PApplet.main(VirtualWorld.class);
    }

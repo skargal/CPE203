@@ -52,23 +52,14 @@ final class WorldModel
    private final int ORE_REACH = 1;
    public final String ORE_KEY = "ore";
 
-   private final String GHOST_KEY = "ghost";
-   private final int GHOST_NUM_PROPERTIES = 7;
-   private final int GHOST_ID = 1;
-   private final int GHOST_COL = 2;
-   private final int GHOST_ROW = 3;
-   private final int GHOST_LIMIT = 4;
-   private final int GHOST_ACTION_PERIOD = 5;
-   private final int GHOST_ANIMATION_PERIOD = 6;
-
-   private final String FROG_KEY = "frog";
-   private final int FROG_NUM_PROPERTIES = 7;
-   private final int FROG_ID = 1;
-   private final int FROG_COL = 2;
-   private final int FROG_ROW = 3;
-   private final int FROG_LIMIT = 4;
-   private final int FROG_ACTION_PERIOD = 5;
-   private final int FROG_ANIMATION_PERIOD = 6;
+   private final String Space_Frog_KEY = "space_frog";
+   private final int Space_Frog_NUM_PROPERTIES = 7;
+   private final int Space_Frog_ID = 1;
+   private final int Space_Frog_COL = 2;
+   private final int Space_Frog_ROW = 3;
+   private final int Space_Frog_LIMIT = 4;
+   private final int Space_Frog_ACTION_PERIOD = 5;
+   private final int Space_Frog_ANIMATION_PERIOD = 6;
 
    public WorldModel(int numRows, int numCols, Background defaultBackground)
    {
@@ -155,40 +146,22 @@ final class WorldModel
       return properties.length == ORE_NUM_PROPERTIES;
    }
 
-   public boolean parseGhost(String [] properties,
-                              ImageStore imageStore)
-{
-   if (properties.length == GHOST_NUM_PROPERTIES)
-   {
-      Point pt = new Point(Integer.parseInt(properties[GHOST_COL]),
-              Integer.parseInt(properties[GHOST_ROW]));
-      Entity entity = pt.createGhost(properties[GHOST_ID],
-              Integer.parseInt(properties[GHOST_LIMIT]),
-              Integer.parseInt(properties[GHOST_ACTION_PERIOD]),
-              Integer.parseInt(properties[GHOST_ANIMATION_PERIOD]),
-              imageStore.getImageList(GHOST_KEY));
-      tryAddEntity(entity);
-   }
-
-   return properties.length == GHOST_NUM_PROPERTIES;
-}
-
-   public boolean parseFrog(String [] properties,
+   public boolean parseSpace_Frog(String [] properties,
                              ImageStore imageStore)
    {
-      if (properties.length == FROG_NUM_PROPERTIES)
+      if (properties.length == Space_Frog_NUM_PROPERTIES)
       {
-         Point pt = new Point(Integer.parseInt(properties[FROG_COL]),
-                 Integer.parseInt(properties[FROG_ROW]));
-         Entity entity = pt.createGhost(properties[FROG_ID],
-                 Integer.parseInt(properties[FROG_LIMIT]),
-                 Integer.parseInt(properties[FROG_ACTION_PERIOD]),
-                 Integer.parseInt(properties[FROG_ANIMATION_PERIOD]),
-                 imageStore.getImageList(FROG_KEY));
+         Point pt = new Point(Integer.parseInt(properties[Space_Frog_COL]),
+                 Integer.parseInt(properties[Space_Frog_ROW]));
+         Entity entity = pt.createSpace_Frog(properties[Space_Frog_ID],
+                 Integer.parseInt(properties[Space_Frog_LIMIT]),
+                 Integer.parseInt(properties[Space_Frog_ACTION_PERIOD]),
+                 Integer.parseInt(properties[Space_Frog_ANIMATION_PERIOD]),
+                 imageStore.getImageList(Space_Frog_KEY));
          tryAddEntity(entity);
       }
 
-      return properties.length == FROG_NUM_PROPERTIES;
+      return properties.length == Space_Frog_NUM_PROPERTIES;
    }
 
    public boolean parseSmith(String [] properties,
@@ -239,7 +212,10 @@ final class WorldModel
             case SMITH_KEY:
                return parseSmith(properties, imageStore);
             case VEIN_KEY:
-               return parseVein(properties, imageStore);
+            return parseVein(properties, imageStore);
+            case Space_Frog_KEY:
+               return parseSpace_Frog(properties, imageStore);
+
 
          }
       }
@@ -252,9 +228,8 @@ final class WorldModel
    {
       if (isOccupied( entity.getPosition()))
       {
-         // arguably the wrong type of exception, but we are not
-         // defining our own exceptions yet
-         throw new IllegalArgumentException("position occupied");
+
+         throw new UnsupportedOperationException("occupied");
       }
 
       addEntity(entity);
@@ -274,10 +249,7 @@ final class WorldModel
 
 
 
-   /*
-         Assumes that there is no entity currently occupying the
-         intended destination cell.
-   */
+
    public void addEntity(Entity entity)
    {
       if (withinBounds(entity.getPosition()))
@@ -287,7 +259,7 @@ final class WorldModel
       }
    }
 
-   // removes Entity at current position and places at new position
+
    public void moveEntity(Entity entity, Point pos)
    {
       Point oldPos = entity.getPosition();
@@ -329,6 +301,15 @@ final class WorldModel
          return Optional.empty();
       }
    }
+
+   /*public void setBackground(Point pos, Background background)
+   {
+      if (withinBounds(pos))
+      {
+         setBackgroundCell(pos, background);
+      }
+   }
+*/
 
    public void setBackground(Point pos, Background background)
    {
